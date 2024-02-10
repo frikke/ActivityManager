@@ -28,25 +28,38 @@ class AboutActivity : BaseActivity() {
         val packageInfo = packageInfoProvider.getPackageInfo(packageName)
 
         binding.versionName.text = getString(
-            R.string.about_version_format,
-            packageInfo.versionName, packageInfo.versionCode
+            R.string.app_version_format,
+            packageInfo.versionName,
+            PackageInfoProvider.getVersionCode(packageInfo)
         )
 
         binding.donate.setOnClickListener {
             AppUtils.openLink(this, getString(R.string.donate_link))
         }
 
-        binding.sourceCode.setOnClickListener {
-            IntentUtils.openBrowser(this, AppUtils.REPOSITORY)
-        }
-
         binding.issuesTracker.setOnClickListener {
             IntentUtils.openBrowser(this, AppUtils.ISSUES_TRACKER)
+        }
+
+        binding.suggestIdea.setOnClickListener {
+            IntentUtils.openBrowser(this, AppUtils.SUGGESTION_LINK)
+        }
+
+        binding.translate.setOnClickListener {
+            IntentUtils.openBrowser(this, AppUtils.TRANSLATE_LINK)
+        }
+
+        binding.sourceCode.setOnClickListener {
+            IntentUtils.openBrowser(this, AppUtils.REPOSITORY)
         }
 
         binding.openSource.setOnClickListener {
             LicensesDialogFragment()
                 .show(supportFragmentManager, LicensesDialogFragment.TAG)
+        }
+
+        binding.version.setOnClickListener {
+            IntentUtils.openBrowser(this, AppUtils.CHANGELOG)
         }
     }
 

@@ -1,3 +1,32 @@
+## 5.4.8 (7 Feb 2024)
+- avoid duplicates in a shortcut name suggestions
+- add filter bottom sheet drag handle
+- scroll the list to the top to display new items
+- scroll the activities list to the top when toggle non-exported activities visibility
+- hide the fast scroll popup when the list is sorted in non-alphabetical order
+- handle the case when an application versionName is null
+- add an option to create an application shortcut
+- update snackbar style
+
+## 5.4.7 (15 Jan 2024)
+- Add a new filter menu with sorting options
+
+## 5.4.6 (6 Jan 2024)
+- Display applications version
+
+## 5.4.5 (2 Oct 2023)
+- Support per-app language preferences on Android 13+
+
+## 5.4.4 (25 Sep 2023)
+- Bugfixes
+
+## 5.4.3 (18 Sep 2023)
+- Add an option to launch an activity shortcut using root shell [#56](https://github.com/sdex/ActivityManager/issues/56)
+
+## 5.4.2 (6 Sep 2023)
+- Fix intent builder screen state reset [#52](https://github.com/sdex/ActivityManager/pull/52) (by [Jesse205](https://github.com/Jesse205))
+- Add name suggestions when creating a shortcut [#53](https://github.com/sdex/ActivityManager/pull/53) (by [Jesse205](https://github.com/Jesse205))
+
 ## 5.4.1 (29 May 2023)
 - Add a new translation - Portuguese, Brazilian (by [m_s_](https://crowdin.com/profile/askz0))
 

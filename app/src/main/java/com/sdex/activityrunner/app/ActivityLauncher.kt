@@ -8,6 +8,7 @@ import com.sdex.activityrunner.R
 import com.sdex.activityrunner.intent.IntentBuilderActivity
 import com.sdex.activityrunner.util.IntentUtils
 import com.sdex.activityrunner.util.RootUtils
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -34,25 +35,26 @@ fun Activity.launchActivity(
 
 fun Activity.launchActivity(
     componentName: ComponentName,
-    isExported: Boolean,
+    useRoot: Boolean,
 ) {
-    if (isExported) {
+    if (useRoot) {
+        launchActivityWithRoot(this, componentName)
+    } else {
         IntentUtils.launchActivity(
             this,
             componentName,
             componentName.className.split(".").last(),
             false
         )
-    } else {
-        launchActivityWithRoot(this, componentName)
     }
 }
 
+@OptIn(DelicateCoroutinesApi::class)
 private fun launchActivityWithRoot(
     context: Context,
     componentName: ComponentName
 ) {
-    GlobalScope.launch {
+    GlobalScope.launch(Dispatchers.IO) {
         when (launchActivityUsingRoot(componentName)) {
             ROOT_ERROR -> R.string.starting_activity_root_error
             ROOT_NOT_AVAILABLE -> R.string.starting_activity_root_not_available
@@ -65,24 +67,23 @@ private fun launchActivityWithRoot(
     }
 }
 
-private suspend fun launchActivityUsingRoot(componentName: ComponentName): Int =
-    withContext(Dispatchers.IO) {
-        return@withContext if (!RootUtils.isSuAvailable()) {
-            ROOT_NOT_AVAILABLE
-        } else {
-            return@withContext try {
-                val command = "am start -n " + componentName.packageName + "/" +
-                    componentName.normalizeClassName()
-                Timber.d("Execute: \"$command\"")
-                val result = RootUtils.execute(command)
-                Timber.d("Result: \"$result\"")
-                ROOT_OK
-            } catch (e: Exception) {
-                Timber.e(e)
-                ROOT_ERROR
-            }
+private fun launchActivityUsingRoot(componentName: ComponentName): Int {
+    return if (!RootUtils.isSuAvailable()) {
+        ROOT_NOT_AVAILABLE
+    } else {
+        try {
+            val command = "am start -n " + componentName.packageName + "/" +
+                componentName.normalizeClassName()
+            Timber.d("Execute: \"$command\"")
+            val result = RootUtils.execute(command)
+            Timber.d("Result: \"$result\"")
+            ROOT_OK
+        } catch (e: Exception) {
+            Timber.e(e)
+            ROOT_ERROR
         }
     }
+}
 
 private fun ComponentName.normalizeClassName(): String =
     if (className.contains("$")) {

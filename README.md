@@ -16,22 +16,22 @@ Screenshots:
 ----------
 <div style="display:flex;">
     <img
-      src="https://raw.githubusercontent.com/sdex/ActivityManager/master/docs/graphics/screenshots/Screenshot_20221008_092630.png"
-      alt="Screenshot" width="30%" />
-    <img
-        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/docs/graphics/screenshots/Screenshot_20221008_092755.png"
+        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/metadata/en-US/images/phoneScreenshots/1_apps_list.png"
         alt="Screenshot" width="30%" />
     <img
-        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/docs/graphics/screenshots/Screenshot_20221008_092848.png"
+        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/metadata/en-US/images/phoneScreenshots/2_activities_list.png"
         alt="Screenshot" width="30%" />
     <img
-        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/docs/graphics/screenshots/Screenshot_20221008_092858.png"
+        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/metadata/en-US/images/phoneScreenshots/3_create_shortcut.png"
         alt="Screenshot" width="30%" />
     <img
-        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/docs/graphics/screenshots/Screenshot_20221008_093012.png"
+        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/metadata/en-US/images/phoneScreenshots/4_pick_shortcut_icon.png"
         alt="Screenshot" width="30%" />
     <img
-        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/docs/graphics/screenshots/Screenshot_20221008_093548.png"
+        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/metadata/en-US/images/phoneScreenshots/5_intent_builder.png"
+        alt="Screenshot" width="30%" />
+    <img
+        src="https://raw.githubusercontent.com/sdex/ActivityManager/master/metadata/en-US/images/phoneScreenshots/6_manifest_viewer.png"
         alt="Screenshot" width="30%" />
 </div>
 
@@ -54,13 +54,14 @@ Or build from the repo directly:
 
 Contributing to the project:
 ----------
+[![Crowdin](https://badges.crowdin.net/activity-manager/localized.svg)](https://crowdin.com/project/activity-manager) \
 [Translate the app on Crowdin](https://crowdin.com/project/activity-manager)
 
 Support development:
 ----------
-https://sdex.dev/donate/ 
+https://sdex.dev/donate/
 
 License:
 ----------
-**Activity Manager** is distributed under the terms of the Apache License (Version 2.0). See the
-[license](LICENSE) for more information.
+**Activity Manager** is distributed under the terms of the Apache License (Version 2.0). \
+See the [license](LICENSE) for more information.

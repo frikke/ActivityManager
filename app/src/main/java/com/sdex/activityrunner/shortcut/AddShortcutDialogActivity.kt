@@ -8,15 +8,20 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
+import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
 import com.maltaisn.icondialog.IconDialog
 import com.maltaisn.icondialog.IconDialogSettings
 import com.maltaisn.icondialog.data.Icon
@@ -31,7 +36,6 @@ import com.sdex.activityrunner.db.history.HistoryModel
 import com.sdex.activityrunner.extensions.doAfterMeasure
 import com.sdex.activityrunner.extensions.resolveColorAttr
 import com.sdex.activityrunner.extensions.serializable
-import com.sdex.activityrunner.glide.GlideApp
 import com.sdex.activityrunner.intent.converter.HistoryToLaunchParamsConverter
 import com.sdex.activityrunner.intent.converter.LaunchParamsToIntentConverter
 import com.sdex.activityrunner.preferences.TooltipPreferences
@@ -57,11 +61,11 @@ class AddShortcutDialogActivity : AppCompatActivity(), IconDialog.Callback {
         binding = ActivityAddShortcutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
+        binding.root.background = materialAlertDialogBuilder.background
+
         val activityModel = intent?.serializable<ActivityModel>(ARG_ACTIVITY_MODEL)
         val historyModel = intent?.serializable<HistoryModel>(ARG_HISTORY_MODEL)
-
-        binding.label.setText(activityModel?.name)
-        binding.label.text?.let { binding.label.setSelection(it.length) }
 
         val loader = IconPackLoader(applicationContext)
         iconPack = createMaterialDesignIconPack(loader)
@@ -71,7 +75,7 @@ class AddShortcutDialogActivity : AppCompatActivity(), IconDialog.Callback {
         launcherLargeIconSize = activityManager.launcherLargeIconSize
 
         if (activityModel != null) {
-            GlideApp.with(this)
+            Glide.with(this)
                 .load(activityModel)
                 .error(R.mipmap.ic_launcher)
                 .apply(RequestOptions().centerCrop())
@@ -79,7 +83,7 @@ class AddShortcutDialogActivity : AppCompatActivity(), IconDialog.Callback {
                 .into(object : CustomTarget<Drawable>() {
                     override fun onResourceReady(
                         resource: Drawable,
-                        transition: Transition<in Drawable>?
+                        transition: Transition<in Drawable>?,
                     ) {
                         bitmap = resource.toBitmap()
                         binding.icon.setImageDrawable(resource)
@@ -89,10 +93,27 @@ class AddShortcutDialogActivity : AppCompatActivity(), IconDialog.Callback {
                     override fun onLoadCleared(placeholder: Drawable?) {
                     }
                 })
+            binding.useRoot.isVisible = true
+            binding.useRoot.isChecked = !activityModel.exported
+
+            binding.label.doOnTextChanged { _, _, _, count ->
+                binding.valueLayout.endIconMode = if (count == 0) {
+                    TextInputLayout.END_ICON_DROPDOWN_MENU
+                } else {
+                    TextInputLayout.END_ICON_CLEAR_TEXT
+                }
+            }
+            binding.label.setText(activityModel.label)
+            binding.label.text?.let { binding.label.setSelection(it.length) }
+            binding.label.setSimpleItems(
+                setOf(activityModel.label, activityModel.name).filterNotNull().toTypedArray()
+            )
         }
 
         if (historyModel != null) {
+            binding.label.setText(historyModel.name)
             binding.icon.setImageResource(R.mipmap.ic_launcher)
+            binding.valueLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
         }
 
         binding.icon.setOnClickListener {
@@ -114,11 +135,19 @@ class AddShortcutDialogActivity : AppCompatActivity(), IconDialog.Callback {
 
             activityModel?.let {
                 val model = it.copy(name = shortcutName)
-                IntentUtils.createLauncherIcon(this, model, bitmap)
+                IntentUtils.createLauncherIcon(
+                    this,
+                    model,
+                    bitmap,
+                    binding.useRoot.isChecked
+                )
             }
 
             historyModel?.let {
-                createHistoryModelShortcut(historyModel, shortcutName)
+                createHistoryModelShortcut(
+                    historyModel,
+                    shortcutName
+                )
             }
 
             finish()
@@ -164,7 +193,7 @@ class AddShortcutDialogActivity : AppCompatActivity(), IconDialog.Callback {
         binding.icon.setImageDrawable(resource)
     }
 
-    private fun showIconMenu(it: View?) {
+    private fun showIconMenu(it: View) {
         val popupMenu = PopupMenu(this, it)
         popupMenu.inflate(R.menu.shortcut_icon)
         popupMenu.setOnMenuItemClickListener { menuItem ->
@@ -200,7 +229,7 @@ class AddShortcutDialogActivity : AppCompatActivity(), IconDialog.Callback {
     private fun loadIcon(uri: Uri) {
         val am = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val size = am.launcherLargeIconSize
-        GlideApp.with(this)
+        Glide.with(this)
             .asBitmap()
             .load(uri)
             .error(R.mipmap.ic_launcher)

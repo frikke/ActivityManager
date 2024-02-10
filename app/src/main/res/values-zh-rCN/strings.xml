@@ -3,7 +3,7 @@
     <string name="history_activity">历史记录</string>
     <string name="settings_activity">设置</string>
     <!-- activity options -->
-    <string name="activity_option_launch_params">使用 ROOT 启动 Activity</string>
+    <string name="activity_option_launch_params">使用参数启动 Activity</string>
     <string name="activity_option_launch_root">使用 ROOT 启动 Activity</string>
     <string name="activity_option_create_shortcut">创建快捷方式</string>
     <!-- application options -->
@@ -32,6 +32,7 @@
     <string name="starting_activity_root_not_available">Root 不可用或未授予权限</string>
     <string name="activities_list_empty_text">没有已导出的 Activity</string>
     <string name="activities_list_empty_action">显示未导出的 Activity</string>
+    <string name="activities_list_failed_loading">Failed to open \"%1$s\"</string>
     <string name="action_about">关于</string>
     <string name="action_launch_intent">Intent 启动器</string>
     <string name="action_history">历史记录</string>
@@ -57,11 +58,15 @@
     <string name="about_donation">支持开发</string>
     <string name="about_source_code">源代码</string>
     <string name="about_version">版本</string>
-    <string name="about_issues_tracker">问题反馈</string>
-    <string name="about_feedback">报告 bug，问些问题…</string>
+    <string name="about_bug_tracker">Report a problem</string>
+    <string name="about_suggest_idea">Suggest an idea</string>
+    <string name="about_translation">Help with translation</string>
     <string name="about_open_source">开源许可证</string>
+    <string name="donate_snackbar_text">@string/about_donation</string>
+    <string name="donate_snackbar_action_text">@string/donate_action_text</string>
     <string name="donate_message">如果您喜欢这个应用，捐赠我们吧</string>
     <string name="donate_action_text">捐赠</string>
+    <string name="donate_negative_action_text">Never ask</string>
     <string name="input_key">输入键</string>
     <string name="input_value">输入值</string>
     <string name="key">键</string>
@@ -94,10 +99,6 @@
     <string name="pref_header_appearance">外观</string>
     <string name="pref_appearance_theme_title">主题</string>
     <string name="pref_header_advanced">高级</string>
-    <string name="pref_system_apps_title">显示系统应用</string>
-    <string name="pref_disabled_apps_title">显示已停用的应用</string>
-    <string name="pref_advanced_system_apps_title">显示系统应用标识</string>
-    <string name="pref_advanced_disabled_apps_title">显示已停用的应用标识</string>
     <string name="pref_advanced_not_exported_title">显示未导出的 Activities</string>
     <string name="pref_advanced_not_exported_summary">只能使用 Root 运行</string>
     <string-array name="pref_appearance_theme_list_titles">
@@ -117,4 +118,16 @@
     <string name="manifest_viewer_line_numbers">行号</string>
     <string name="manifest_viewer_search">搜索</string>
     <string name="manifest_viewer_search_hint">查找关键字</string>
+        <!-- filter -->
+    <string name="filter">Filter</string>
+    <string name="filter_header_sort_by">Sort by</string>
+    <string name="filter_sort_by_name">Name</string>
+    <string name="filter_sort_by_update_time">Update time</string>
+    <string name="filter_sort_by_install_time">Install time</string>
+    <string name="filter_sort_order_asc">Ascending</string>
+    <string name="filter_sort_order_desc">Descending</string>
+    <string name="filter_system_apps_title">System applications</string>
+    <string name="filter_disabled_apps_title">Disabled applications</string>
+    <string name="filter_toggle_show">Show</string>
+    <string name="filter_toggle_label">Label</string>
 </resources>

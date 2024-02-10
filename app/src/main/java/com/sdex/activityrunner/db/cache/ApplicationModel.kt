@@ -12,6 +12,10 @@ data class ApplicationModel(
     val exportedActivitiesCount: Int,
     val system: Boolean,
     val enabled: Boolean,
+    val versionCode: Long,
+    val versionName: String,
+    val updateTime: Long,
+    val installTime: Long,
 ) : Serializable {
 
     companion object {
@@ -23,5 +27,9 @@ data class ApplicationModel(
         const val EXPORTED_ACTIVITIES_COUNT = "exportedActivitiesCount"
         const val ENABLED = "enabled"
         const val SYSTEM = "system"
+        const val VERSION_CODE = "versionCode"
+        const val VERSION_NAME = "versionName"
+        const val UPDATE_TIME = "updateTime"
+        const val INSTALL_TIME = "installTime"
     }
 }

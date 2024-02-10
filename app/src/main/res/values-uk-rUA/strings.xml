@@ -32,6 +32,7 @@
     <string name="starting_activity_root_not_available">Root недоступний або права не надані</string>
     <string name="activities_list_empty_text">Додаток не містить доступних компонентів</string>
     <string name="activities_list_empty_action">Увімкнути показ прихованих компонентів</string>
+    <string name="activities_list_failed_loading">Помилка при відкритті \"%1$s\"</string>
     <string name="action_about">Про програму</string>
     <string name="action_launch_intent">Запустити intent</string>
     <string name="action_history">Історія</string>
@@ -57,11 +58,15 @@
     <string name="about_donation">Підтримати розробку</string>
     <string name="about_source_code">Вихідний код</string>
     <string name="about_version">Версія</string>
-    <string name="about_issues_tracker">Зв\'язатися з автором</string>
-    <string name="about_feedback">Повідомити про проблему, задати запитання…</string>
+    <string name="about_bug_tracker">Повідомити про проблему</string>
+    <string name="about_suggest_idea">Запропонувати ідею</string>
+    <string name="about_translation">Допомогти з перекладом</string>
     <string name="about_open_source">Бібліотеки з відкритим кодом</string>
+    <string name="donate_snackbar_text">@string/about_donation</string>
+    <string name="donate_snackbar_action_text">@string/donate_action_text</string>
     <string name="donate_message">Якщо вам подобається програма, будь ласка, розгляньте можливість підтримати розробку.</string>
     <string name="donate_action_text">Підтримати</string>
+    <string name="donate_negative_action_text">Не показувати</string>
     <string name="input_key">Введіть ключ</string>
     <string name="input_value">Введіть значення</string>
     <string name="key">Ключ</string>
@@ -94,10 +99,6 @@
     <string name="pref_header_appearance">Зовнішній вигляд</string>
     <string name="pref_appearance_theme_title">Тема</string>
     <string name="pref_header_advanced">Додаткові можливості</string>
-    <string name="pref_system_apps_title">Показувати системні додатки</string>
-    <string name="pref_disabled_apps_title">Показувати вимкнені додатки</string>
-    <string name="pref_advanced_system_apps_title">Показувати індикатор системних додатків</string>
-    <string name="pref_advanced_disabled_apps_title">Показувати індикатор вимкнених додатків</string>
     <string name="pref_advanced_not_exported_title">Показувати приховані компоненти</string>
     <string name="pref_advanced_not_exported_summary">Можна запускати лише від імені Root</string>
     <string-array name="pref_appearance_theme_list_titles">
@@ -123,4 +124,16 @@
     <string name="manifest_viewer_line_numbers">Номери рядків</string>
     <string name="manifest_viewer_search">Пошук</string>
     <string name="manifest_viewer_search_hint">Знайти слово</string>
+        <!-- filter -->
+    <string name="filter">Фільтр</string>
+    <string name="filter_header_sort_by">Сортувати по</string>
+    <string name="filter_sort_by_name">Ім\'я</string>
+    <string name="filter_sort_by_update_time">Час оновлення</string>
+    <string name="filter_sort_by_install_time">Час встановлення</string>
+    <string name="filter_sort_order_asc">За зростанням</string>
+    <string name="filter_sort_order_desc">За спаданням</string>
+    <string name="filter_system_apps_title">Системні додатки</string>
+    <string name="filter_disabled_apps_title">Неактивні додатки</string>
+    <string name="filter_toggle_show">Показувати</string>
+    <string name="filter_toggle_label">Мітка</string>
 </resources>

@@ -7,24 +7,25 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.SearchView.*
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.MenuProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.behavior.SwipeDismissBehavior
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.sdex.activityrunner.about.AboutActivity
+import com.sdex.activityrunner.about.DonateDialog
 import com.sdex.activityrunner.app.ActivitiesListActivity
 import com.sdex.activityrunner.app.ApplicationsListAdapter
 import com.sdex.activityrunner.app.MainViewModel
 import com.sdex.activityrunner.app.dialog.ApplicationOptionsDialog
+import com.sdex.activityrunner.app.dialog.FilterBottomSheetDialogFragment
 import com.sdex.activityrunner.commons.BaseActivity
 import com.sdex.activityrunner.databinding.ActivityMainBinding
 import com.sdex.activityrunner.db.cache.ApplicationModel
-import com.sdex.activityrunner.extensions.addDividerItemDecoration
 import com.sdex.activityrunner.intent.IntentBuilderActivity
 import com.sdex.activityrunner.preferences.AppPreferences
 import com.sdex.activityrunner.preferences.SettingsActivity
-import com.sdex.activityrunner.util.AppUtils
 import com.sdex.activityrunner.util.UIUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -52,6 +53,14 @@ class MainActivity : BaseActivity() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
+                    R.id.action_filter -> {
+                        FilterBottomSheetDialogFragment().show(
+                            supportFragmentManager,
+                            FilterBottomSheetDialogFragment.TAG
+                        )
+                        true
+                    }
+
                     R.id.action_launch_intent -> {
                         IntentBuilderActivity.start(this@MainActivity, null)
                         true
@@ -85,33 +94,37 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        binding.list.addDividerItemDecoration()
         binding.list.adapter = adapter
 
         viewModel.items.observe(this) {
+            val scrollToTop =
+                // scroll to top when the filter dialog is shown
+                supportFragmentManager.findFragmentByTag(FilterBottomSheetDialogFragment.TAG) != null ||
+                    // scroll to top when the list already is at the top to display new items
+                    (binding.list.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition() == 0
             adapter.submitList(it) {
                 if (it.isNotEmpty()) {
                     binding.progress.hide()
+                }
+                if (scrollToTop) {
+                    binding.list.scrollToPosition(0)
                 }
             }
         }
 
         binding.progress.show()
 
-        if (appPreferences.appOpenCounter % 10 == 0) {
-            val behavior = BaseTransientBottomBar.Behavior().apply {
-                setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY)
-            }
-            Snackbar.make(binding.coordinator, R.string.about_donation, Snackbar.LENGTH_INDEFINITE)
-                .setBehavior(behavior)
-                .setAction(R.string.donate_action_text) {
-                    AppUtils.openLink(this, getString(R.string.donate_link))
-                }.show()
+        if (appPreferences.showDonate && appPreferences.appOpenCounter > 5) {
+            showDonateSnackbar()
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    fun refresh() {
+        adapter.update()
+        viewModel.search(viewModel.searchQuery.value)
+    }
+
+    fun update() {
         adapter.update()
     }
 
@@ -153,6 +166,23 @@ class MainActivity : BaseActivity() {
                 return true
             }
         })
+    }
+
+    private fun showDonateSnackbar() {
+        val behavior = BaseTransientBottomBar.Behavior().apply {
+            setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY)
+        }
+        Snackbar.make(
+            binding.coordinator,
+            R.string.donate_snackbar_text,
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setBehavior(behavior)
+            .setAction(getString(R.string.donate_snackbar_action_text).uppercase()) {
+                val dialog = DonateDialog.newInstance()
+                dialog.show(supportFragmentManager, DonateDialog.TAG)
+            }
+            .show()
     }
 
     companion object {

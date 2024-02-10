@@ -1,6 +1,5 @@
 package com.sdex.activityrunner.util
 
-import android.content.pm.ApplicationInfo
 import com.sdex.activityrunner.db.cache.ApplicationModel
 import com.sdex.activityrunner.db.cache.CacheRepository
 import timber.log.Timber
@@ -37,28 +36,6 @@ class ApplicationsLoader @Inject constructor(
 
     private fun getApplicationsList(): List<ApplicationModel> {
         return packageInfoProvider.getInstalledPackages()
-            .mapNotNull { getApplication(it) }
-    }
-
-    private fun getApplication(
-        packageName: String
-    ): ApplicationModel? = try {
-        val packageInfo = packageInfoProvider.getPackageInfo(packageName)
-        val name = packageInfoProvider.getApplicationName(packageInfo)
-        val activities = packageInfo.activities ?: emptyArray()
-        val applicationInfo = packageInfo.applicationInfo
-        val isSystemApp = if (applicationInfo != null) {
-            (applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
-        } else {
-            false
-        }
-        val exportedActivitiesCount = activities.count { it.isEnabled && it.exported }
-        ApplicationModel(
-            packageName, name, activities.size, exportedActivitiesCount, isSystemApp,
-            applicationInfo.enabled,
-        )
-    } catch (e: Exception) {
-        Timber.e(e)
-        null
+            .mapNotNull { packageInfoProvider.getApplication(it) }
     }
 }

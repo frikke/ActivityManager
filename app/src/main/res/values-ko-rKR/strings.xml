@@ -32,6 +32,7 @@
     <string name="starting_activity_root_not_available">루트 권한을 사용할 수 없거나 권한이 부여돼지 않았습니다</string>
     <string name="activities_list_empty_text">내보낸 액티비티가 없습니다</string>
     <string name="activities_list_empty_action">내보내지 않은 항목 표시</string>
+    <string name="activities_list_failed_loading">Failed to open \"%1$s\"</string>
     <string name="action_about">정보</string>
     <string name="action_launch_intent">인텐트 실행기</string>
     <string name="action_history">기록</string>
@@ -57,11 +58,15 @@
     <string name="about_donation">개발 지원</string>
     <string name="about_source_code">소스 코드</string>
     <string name="about_version">Version</string>
-    <string name="about_issues_tracker">Issue tracker</string>
-    <string name="about_feedback">Report a problem, aks a question…</string>
+    <string name="about_bug_tracker">Report a problem</string>
+    <string name="about_suggest_idea">Suggest an idea</string>
+    <string name="about_translation">Help with translation</string>
     <string name="about_open_source">Open source libraries</string>
-    <string name="donate_message">If you like the app, please consider making some donation</string>
+    <string name="donate_snackbar_text">@string/about_donation</string>
+    <string name="donate_snackbar_action_text">@string/donate_action_text</string>
+    <string name="donate_message">If you are using Activity Manager and have enjoyed it, then this is a very powerful way to say thank you! By donating, you are helping make this tool, that already helps you, sustainable and healthy.</string>
     <string name="donate_action_text">Donate</string>
+    <string name="donate_negative_action_text">Never ask</string>
     <string name="input_key">Input key</string>
     <string name="input_value">Input value</string>
     <string name="key">Key</string>
@@ -94,10 +99,6 @@
     <string name="pref_header_appearance">Appearance</string>
     <string name="pref_appearance_theme_title">Theme</string>
     <string name="pref_header_advanced">Advanced</string>
-    <string name="pref_system_apps_title">Show system apps</string>
-    <string name="pref_disabled_apps_title">Show disabled apps</string>
-    <string name="pref_advanced_system_apps_title">Show system app indicator</string>
-    <string name="pref_advanced_disabled_apps_title">Show disabled app indicator</string>
     <string name="pref_advanced_not_exported_title">Show not exported activities</string>
     <string name="pref_advanced_not_exported_summary">Can be run only using Root</string>
     <string-array name="pref_appearance_theme_list_titles">
@@ -117,4 +118,16 @@
     <string name="manifest_viewer_line_numbers">Line numbers</string>
     <string name="manifest_viewer_search">Search</string>
     <string name="manifest_viewer_search_hint">Find keyword</string>
+        <!-- filter -->
+    <string name="filter">Filter</string>
+    <string name="filter_header_sort_by">Sort by</string>
+    <string name="filter_sort_by_name">Name</string>
+    <string name="filter_sort_by_update_time">Update time</string>
+    <string name="filter_sort_by_install_time">Install time</string>
+    <string name="filter_sort_order_asc">Ascending</string>
+    <string name="filter_sort_order_desc">Descending</string>
+    <string name="filter_system_apps_title">System applications</string>
+    <string name="filter_disabled_apps_title">Disabled applications</string>
+    <string name="filter_toggle_show">Show</string>
+    <string name="filter_toggle_label">Label</string>
 </resources>
